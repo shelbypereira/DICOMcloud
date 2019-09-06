@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.ModelBinding;
 using DICOMcloud.Extensions;
 using DICOMcloud.Wado;
@@ -8,6 +9,7 @@ using DICOMcloud.Wado.Models;
 
 namespace DICOMcloud.Wado.Controllers
 {
+    [EnableCors("*","*","*")]
     [LogAction]
     public class WadoRSController : ApiController
     {
@@ -39,6 +41,21 @@ namespace DICOMcloud.Wado.Controllers
         {
             return WadoService.RetrieveSeries ( request ) ;
         }
+
+        //the route /frames/1 is not from the DICOM standard, but it appears tha the cornerstone viewer is using this url to try to retrieve the instance
+        [Route("wadors/studies/{StudyInstanceUID}/series/{SeriesInstanceUID}/instances/{SOPInstanceUID}/metadata/frames/1")]
+        [HttpGet]
+        public HttpResponseMessage GetInstanceFrame1 
+        ( 
+            [ModelBinder(typeof(RsObjectRequestModelBinder))]  
+            IWadoRsInstanceRequest request 
+        )
+        {
+            return WadoService.RetrieveInstance ( request ) ;
+        }
+
+
+
 
         [Route("wadors/studies/{StudyInstanceUID}/series/{SeriesInstanceUID}/instances/{SOPInstanceUID}")]
         [HttpGet]
@@ -95,6 +112,7 @@ namespace DICOMcloud.Wado.Controllers
             try
             { 
                 var response= WadoService.RetrieveInstanceMetadata ( request ) ;
+      //          response.Headers.Add("Access-Control-Allow-Origin", "*");
                 return response;
             }
             catch ( Exception ex )

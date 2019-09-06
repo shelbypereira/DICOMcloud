@@ -38,37 +38,12 @@ namespace DICOMcloud.Wado
         {
             if (sender != null && sender is HttpApplication)
             {
-                var httpApp = sender as HttpApplication;
-                var request = (sender as HttpApplication).Request;
+                var request = ((HttpApplication) sender).Request;
                 if (request != null)
                 {
                     if (_logRequets.IsDebugEnabled)
                     {
-                        var Context = httpApp.Context;
-                        _logRequets.Debug($"{request.RawUrl}");
-                        HttpContextBase ctx = new HttpContextWrapper(Context);
-                        foreach (Route rte in RouteTable.Routes)
-                        {
-                            var routeData = RouteTable.Routes.GetRouteData(ctx);
-
-                            if (routeData != null)
-                            {
-                                if (rte.RouteHandler.GetType().Name == "MvcRouteHandler")
-                                {
-                                    _logRequets.Debug(string.Format("Following: {1} for request: {0}",
-                                        Context.Request.Url,
-                                        rte.Url));
-                                }
-                                else
-                                {
-
-                                    _logRequets.Trace(string.Format("Ignoring route: {1} for request: {0}",
-                                        Context.Request.Url, rte.Url));
-                                }
-
-                                break;
-                            }
-                        }
+                        _logRequets.Trace($"Processing {request.RawUrl}");
 
                     }
                 }

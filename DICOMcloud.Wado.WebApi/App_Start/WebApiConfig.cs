@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Cors;
@@ -21,7 +23,7 @@ namespace DICOMcloud.Wado
         {
             if (filter.ControllerContext.Controller != null)
             {
-                _log.Debug($"found controller {filter.ControllerContext.Controller}");
+                _log.Debug($"found controller {filter.ControllerContext.Controller} for {filter.Request.RequestUri.AbsoluteUri}");
                 var s = "";
                 foreach (var kv in filter.ActionArguments)
                 {
@@ -38,7 +40,7 @@ namespace DICOMcloud.Wado
             base.OnActionExecuting(filter);
         }
     }
-
+  
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
@@ -62,4 +64,6 @@ namespace DICOMcloud.Wado
             log.Info("completed HttpConfigurationRegistration and initialization of WebApiConfig");
         }
     }
+
+  
 }
