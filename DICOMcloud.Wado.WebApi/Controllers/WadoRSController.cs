@@ -10,7 +10,6 @@ using DICOMcloud.Wado.Models;
 namespace DICOMcloud.Wado.Controllers
 {
     [EnableCors("*","*","*")]
-    [LogAction]
     public class WadoRSController : ApiController
     {
         IWadoRsService WadoService { get; set;  }
@@ -28,6 +27,7 @@ namespace DICOMcloud.Wado.Controllers
             IWadoRsStudiesRequest request 
         )
         {
+            
             return WadoService.RetrieveStudy ( request ) ;
         }
 

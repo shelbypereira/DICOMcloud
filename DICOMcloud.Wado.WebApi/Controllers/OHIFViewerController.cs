@@ -9,7 +9,6 @@ using System.Web.Http;
 
 namespace DICOMcloud.Wado.WebApi.Controllers
 {
-    [LogAction]
     public class OhifViewerController : ApiController
     {
         protected IOhifService OhifService {get; set;}

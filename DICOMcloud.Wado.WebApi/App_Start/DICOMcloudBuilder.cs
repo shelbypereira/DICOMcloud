@@ -144,7 +144,6 @@ namespace DICOMcloud.Wado
             For<IObjectRetrieveService>      ( ).Use<ObjectRetrieveService>      ( ) ;
 
             For<IWadoRsService>         ( ).Use<WadoRsService>         ( ) ;
-            For<IWebObjectStoreService> ( ).Use<WebObjectStoreService> ( ) ;
             For<IQidoRsService>         ( ).Use<QidoRsService>         ( ) ;
             For<IWadoUriService>        ( ).Use<WadoUriService>        ( ) ;
             For<IOhifService>           ( ).Use<OhifService>           ( ) ;

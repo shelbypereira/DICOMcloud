@@ -17,8 +17,7 @@ using Dicom;
 
 namespace DICOMcloud.Wado
 {
-    public class WebObjectStoreService : IWebObjectStoreService
-    {
+    public class WebObjectStoreService{
         private IObjectStoreService _storageService;
         private IRetrieveUrlProvider _urlProvider ;
 
@@ -28,7 +27,7 @@ namespace DICOMcloud.Wado
             _urlProvider    = urlProvider ;
         }
 
-        public virtual async Task<HttpResponseMessage> Store
+        public  async Task<HttpResponseMessage> Store
         (
             WebStoreRequest request, 
             IStudyId studyId = null
@@ -38,7 +37,7 @@ namespace DICOMcloud.Wado
 
             if (null != getDicomDelegate)
             {
-                var storeResult = await StoreStudy        ( request, studyId, getDicomDelegate ) ;
+                WadoStoreResponse storeResult = await StoreStudy        ( request, studyId, getDicomDelegate ) ;
                 var result      = new HttpResponseMessage ( storeResult.HttpStatus ) ;
 
                 
@@ -103,7 +102,7 @@ namespace DICOMcloud.Wado
         {
             WadoStoreResponse response = CreateWadoStoreResponseModel (studyId);
 
-            foreach (var mediaContent in request.Contents)
+            foreach (HttpContent mediaContent in request.Contents)
             {
                 Stream dicomStream = await mediaContent.ReadAsStreamAsync();
                 var dicomDs = getDicom(dicomStream);
@@ -115,10 +114,7 @@ namespace DICOMcloud.Wado
                 try
                 {
                     var result = _storageService.StoreDicom(dicomDs, CreateObjectMetadata(dicomDs, request));
-
-
                     response.AddResult(dicomDs);
-
                     PublisherSubscriberFactory.Instance.Publish(this,
                                                                   new WebStoreDatasetProcessedMessage(request, dicomDs));
                 }

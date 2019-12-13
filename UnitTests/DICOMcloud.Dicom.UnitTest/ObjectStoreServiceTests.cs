@@ -143,7 +143,7 @@ namespace DICOMcloud.UnitTest
             return new fo.DicomUniqueIdentifier ( tag, uid ) ;
         }
 
-
+         
         private DicomHelpers        DicomHelper      { get; set; }
         private DataAccessHelpers   DataAccessHelper { get; set; }
         private IObjectStoreService StoreService     { get; set; } 

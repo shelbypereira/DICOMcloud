@@ -9,37 +9,11 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Cors;
 using System.Web.Mvc;
 using NLog;
-using ActionFilterAttribute = System.Web.Http.Filters.ActionFilterAttribute;
 
 
 namespace DICOMcloud.Wado
 {
-    public class LogActionAttribute : ActionFilterAttribute
-    {
-      
-        static readonly ILogger _log= LogManager.GetCurrentClassLogger();
-
-        public override void OnActionExecuting(HttpActionContext filter)
-        {
-            if (filter.ControllerContext.Controller != null)
-            {
-                _log.Debug($"found controller {filter.ControllerContext.Controller} for {filter.Request.RequestUri.AbsoluteUri}");
-                var s = "";
-                foreach (var kv in filter.ActionArguments)
-                {
-                    s += "key=" + kv.Key + " value= " + (kv.Value ?? " " )+ " ; ";
-                }
-                _log.Debug($"actiondescriptor= {filter.ActionDescriptor.ActionName}; actionParams={s}");
-                
-
-            }
-
-           
-           
-
-            base.OnActionExecuting(filter);
-        }
-    }
+   
   
     public static class WebApiConfig
     {

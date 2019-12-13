@@ -12,7 +12,7 @@ namespace DICOMcloud.Wado.Models
     {
         string MediaType { get; set; }
 
-        Collection<HttpContent> Contents { get; }
+      //  Collection<HttpContent> Contents { get; }
     }
 
     public class WebStoreRequest : MultipartRelatedStreamProvider, IWebStoreRequest

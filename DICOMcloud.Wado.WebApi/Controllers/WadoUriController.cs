@@ -7,7 +7,6 @@ using DICOMcloud.Wado.Models;
 
 namespace DICOMcloud.Wado.Controllers
 {
-    [LogAction]
     public class WadoUriController : ApiController
     {
         IWadoUriService ServiceHandler { get; set; }

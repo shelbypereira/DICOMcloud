@@ -30,7 +30,11 @@ namespace DICOMcloud.Wado
         {
 
         }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WadoStoreResponse"/> class.
+        /// </summary>
+        /// <param name="studyId">The study identifier.</param>
+        /// <param name="urlProvider">The URL provider.</param>
         public WadoStoreResponse ( IStudyId studyId, IRetrieveUrlProvider urlProvider = null)
         {
             _dataset         = new fo.DicomDataset ( ) ;
@@ -39,7 +43,10 @@ namespace DICOMcloud.Wado
             HttpStatus       = HttpStatusCode.Unused ;
             StatusMessage    = "" ;
         }
-
+        /// <summary>
+        /// constructs the response content which is the DicomDataSet, first adds the retrieve url of the study
+        /// </summary>
+        /// <returns></returns>
         public fo.DicomDataset GetResponseContent ( )
         {   
             string studyUrl =  "";
